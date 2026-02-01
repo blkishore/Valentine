@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine?</title>
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Arial', sans-serif;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      background: rgba(255,255,255,0.95);
+      padding: 48px 48px 36px 48px;
+      border-radius: 28px;
+      box-shadow: 0 12px 40px 0 rgba(0,0,0,0.18);
+      min-width: 320px;
+      z-index: 2;
+    }
+
+    h1 {
+      color: #ff4d6d;
+      margin-bottom: 32px;
+      font-size: 2.2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #ffd6e0;
+    }
+
+    button {
+      padding: 14px 36px;
+      font-size: 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      position: relative;
+      margin: 0 8px;
+      box-shadow: 0 2px 8px #ffd6e0;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    #yes {
+      background: linear-gradient(90deg, #ff4d6d 60%, #ffafcc 100%);
+      color: white;
+      margin-right: 20px;
+      font-weight: bold;
+      box-shadow: 0 4px 16px #ffb3c6;
+    }
+
+    #no {
+      background: linear-gradient(90deg, #ddd 60%, #bde0fe 100%);
+      color: #333;
+      transition: left 0.3s, top 0.3s, background 0.2s, color 0.2s;
+      font-weight: bold;
+      box-shadow: 0 4px 16px #bde0fe;
+    }
+
+    .celebrate {
+      font-size: 30px;
+      color: #ff4d6d;
+      animation: pop 1s infinite;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: red;
+      animation: fall 3s linear infinite;
+      top: -10px;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="box" id="content">
+    <h1>Will you be my Valentine? 💖</h1>
+    <button id="yes">Yes 💕</button>
+    <button id="no">No 😜</button>
+  </div>
+  <div id="bottom-messages">
+    <div id="motivation">Love yourself first, and everything else falls into line! 💪❤️</div>
+    <div id="funnyline"></div>
+  </div>
+  <style>
+    #bottom-messages {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+    }
+    #motivation {
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 22px;
+      color: #ff4d6d;
+      font-weight: bold;
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      padding: 8px 24px;
+      box-shadow: 0 2px 8px #ffd6e0;
+      max-width: 90vw;
+    }
+    #funnyline {
+      text-align: center;
+      margin-bottom: 18px;
+      font-size: 18px;
+      color: #b83b5e;
+      font-style: italic;
+      background: rgba(255,255,255,0.7);
+      border-radius: 12px;
+      padding: 6px 18px;
+      box-shadow: 0 2px 8px #ffd6e0;
+      max-width: 90vw;
+    }
+  </style>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const content = document.getElementById("content");
+
+
+    const noEmojis = ["😜", "🙈", "😂", "😅", "🤪", "😏", "😬", "🥲", "😛", "👻", "🦄", "🫣", "🫥", "😶‍🌫️", "🦥"];
+    const funnyLines = [
+      "No is not an option! 😆",
+      "You can't escape love! 💘",
+      "Try again, maybe you'll catch me! 🏃‍♂️",
+      "Nice try, but love always wins! 😎",
+      "Denied! Cupid says no! 🏹",
+      "Oops! Button ran away! 🏃‍♀️",
+      "Resistance is futile! 😁",
+      "Nope, not today! 😂",
+      "You sure you want to say no? 🤔",
+      "Love is in the air, not 'No'! 🌬️❤️"
+    ];
+    let noMoveCount = 0;
+
+    noBtn.addEventListener("mouseover", () => {
+      // Change emoji
+      noMoveCount++;
+      const emoji = noEmojis[noMoveCount % noEmojis.length];
+      noBtn.innerHTML = `No ${emoji}`;
+      // Show funny line
+      const funny = funnyLines[Math.floor(Math.random() * funnyLines.length)];
+      document.getElementById("funnyline").textContent = funny;
+
+      // 50% chance to move inside the Yes button
+      if (Math.random() < 0.5) {
+        // Move randomly on the screen as before
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.position = "absolute";
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+      } else {
+        // Move inside the Yes button
+        const yesRect = yesBtn.getBoundingClientRect();
+        const offsetX = Math.random() * (yesRect.width - noBtn.offsetWidth);
+        const offsetY = Math.random() * (yesRect.height - noBtn.offsetHeight);
+        noBtn.style.position = "absolute";
+        noBtn.style.left = (yesRect.left + offsetX) + "px";
+        noBtn.style.top = (yesRect.top + offsetY) + "px";
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      content.innerHTML = `
+        <div class="celebrate">
+          Yayyyy!! 💖🥰<br>
+          Happy Valentine’s Day! 🌹
+        </div>
+      `;
+      startConfetti();
+    });
+
+    function startConfetti() {
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background = 
+          ["#ff4d6d", "#ffafcc", "#ffc8dd", "#bde0fe"][Math.floor(Math.random()*4)];
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
+  </script>
+
+</body>
+</html>
