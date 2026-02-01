@@ -1,221 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine?</title>
-  <style>
-    body {
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      font-family: 'Arial', sans-serif;
-      overflow-x: hidden;
-      overflow-y: auto;
-      position: relative;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
     }
 
-    .box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      background: rgba(255,255,255,0.95);
-      padding: 48px 48px 36px 48px;
-      border-radius: 28px;
-      box-shadow: 0 12px 40px 0 rgba(0,0,0,0.18);
-      min-width: 320px;
-      z-index: 2;
+    body {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        text-align: center;
+        background: rgba(255,255,255,0.95);
+        padding: 40px 30px;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        max-width: 360px;
+        width: 90%;
+        position: relative;
     }
 
     h1 {
-      color: #ff4d6d;
-      margin-bottom: 32px;
-      font-size: 2.2rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 8px #ffd6e0;
+        color: #e63946;
+        margin-bottom: 10px;
+        font-size: 28px;
+    }
+
+    p {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 25px;
+    }
+
+    .quote {
+        font-size: 14px;
+        color: #ff006e;
+        margin-bottom: 25px;
+        font-style: italic;
+    }
+
+    .buttons {
+        position: relative;
+        height: 120px;
     }
 
     button {
-      padding: 14px 36px;
-      font-size: 20px;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      position: relative;
-      margin: 0 8px;
-      box-shadow: 0 2px 8px #ffd6e0;
-      transition: background 0.2s, color 0.2s, transform 0.2s;
+        padding: 12px 28px;
+        border: none;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        position: absolute;
     }
 
     #yes {
-      background: linear-gradient(90deg, #ff4d6d 60%, #ffafcc 100%);
-      color: white;
-      margin-right: 20px;
-      font-weight: bold;
-      box-shadow: 0 4px 16px #ffb3c6;
+        background: linear-gradient(45deg, #ff4d6d, #ff758f);
+        color: white;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 8px 20px rgba(255,77,109,0.4);
+    }
+
+    #yes:hover {
+        transform: translateX(-50%) scale(1.08);
     }
 
     #no {
-      background: linear-gradient(90deg, #ddd 60%, #bde0fe 100%);
-      color: #333;
-      transition: left 0.3s, top 0.3s, background 0.2s, color 0.2s;
-      font-weight: bold;
-      box-shadow: 0 4px 16px #bde0fe;
+        background: #adb5bd;
+        color: #333;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .celebrate {
-      font-size: 30px;
-      color: #ff4d6d;
-      animation: pop 1s infinite;
+        display: none;
+        animation: pop 0.6s ease forwards;
     }
 
     @keyframes pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+        0% { transform: scale(0.5); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
     }
 
-    .confetti {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      background: red;
-      animation: fall 3s linear infinite;
-      top: -10px;
+    .hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
     }
 
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-      }
+    .heart {
+        position: absolute;
+        font-size: 22px;
+        animation: float 4s linear infinite;
     }
-  </style>
+
+    @keyframes float {
+        0% { transform: translateY(100vh); opacity: 1; }
+        100% { transform: translateY(-10vh); opacity: 0; }
+    }
+</style>
 </head>
+
 <body>
 
-
-  <div class="box" id="content">
+<div class="container" id="card">
     <h1>Will you be my Valentine? 💖</h1>
-    <button id="yes">Yes 💕</button>
-    <button id="no">No 😜</button>
-  </div>
-  <div id="bottom-messages">
-    <div id="motivation">Love yourself first, and everything else falls into line! 💪❤️</div>
-    <div id="funnyline"></div>
-  </div>
-  <style>
-    #bottom-messages {
-      position: fixed;
-      left: 0;
-      bottom: 0;
-      width: 100vw;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      pointer-events: none;
-    }
-    #motivation {
-      text-align: center;
-      margin-bottom: 8px;
-      font-size: 22px;
-      color: #ff4d6d;
-      font-weight: bold;
-      background: rgba(255,255,255,0.7);
-      border-radius: 12px;
-      padding: 8px 24px;
-      box-shadow: 0 2px 8px #ffd6e0;
-      max-width: 90vw;
-    }
-    #funnyline {
-      text-align: center;
-      margin-bottom: 18px;
-      font-size: 18px;
-      color: #b83b5e;
-      font-style: italic;
-      background: rgba(255,255,255,0.7);
-      border-radius: 12px;
-      padding: 6px 18px;
-      box-shadow: 0 2px 8px #ffd6e0;
-      max-width: 90vw;
-    }
-  </style>
+    <p>Before you think too much…</p>
+    <div class="quote">“Sorry 😌 Cupid won’t allow a ‘No’ this time!”</div>
 
-  <script>
+    <div class="buttons">
+        <button id="yes">Yes 💘</button>
+        <button id="no">No 🙃</button>
+    </div>
+
+    <div class="celebrate" id="celebrate">
+        <h1>Yayyyy!! 🥰🎉</h1>
+        <p>You just made my heart very happy ❤️</p>
+    </div>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<script>
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
-    const content = document.getElementById("content");
+    const card = document.getElementById("card");
+    const celebrate = document.getElementById("celebrate");
+    const heartsContainer = document.getElementById("hearts");
 
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("touchstart", moveNoButton);
 
-    const noEmojis = ["😜", "🙈", "😂", "😅", "🤪", "😏", "😬", "🥲", "😛", "👻", "🦄", "🫣", "🫥", "😶‍🌫️", "🦥"];
-    const funnyLines = [
-      "No is not an option! 😆",
-      "You can't escape love! 💘",
-      "Try again, maybe you'll catch me! 🏃‍♂️",
-      "Nice try, but love always wins! 😎",
-      "Denied! Cupid says no! 🏹",
-      "Oops! Button ran away! 🏃‍♀️",
-      "Resistance is futile! 😁",
-      "Nope, not today! 😂",
-      "You sure you want to say no? 🤔",
-      "Love is in the air, not 'No'! 🌬️❤️"
+    const funnyQuotes = [
+        "Sorry 😌 Cupid won’t allow a ‘No’ this time!",
+        "Nope! Cupid's got your back! 🏹",
+        "Denied! Love police on patrol 🚨❤️",
+        "You can run, but you can't hide from love! 🕵️‍♂️",
+        "Cupid says: Try again! 😏",
+        "Nice try, but love always wins! 😎",
+        "No is not in the vocabulary today! 📚❌",
+        "Resistance is futile! 😁",
+        "Cupid's arrow is faster than you! 🏹💘",
+        "Love detected! Access denied to 'No' 🚫",
+        "You sure you want to say no? 🤔",
+        "Love is in the air, not 'No'! 🌬️❤️",
+        "Cupid's firewall blocked your 'No'! 🔥",
+        "No button is on vacation! 🏖️",
+        "Cupid says: 'No' is not an option! 💌"
     ];
-    let noMoveCount = 0;
 
-    noBtn.addEventListener("mouseover", () => {
-      // Change emoji
-      noMoveCount++;
-      const emoji = noEmojis[noMoveCount % noEmojis.length];
-      noBtn.innerHTML = `No ${emoji}`;
-      // Show funny line
-      const funny = funnyLines[Math.floor(Math.random() * funnyLines.length)];
-      document.getElementById("funnyline").textContent = funny;
+    function moveNoButton() {
+        // Change the quote to a random funny one
+        const quoteDiv = document.querySelector('.quote');
+        if (quoteDiv) {
+            let newQuote;
+            do {
+                newQuote = funnyQuotes[Math.floor(Math.random() * funnyQuotes.length)];
+            } while (quoteDiv.textContent.trim() === newQuote && funnyQuotes.length > 1);
+            quoteDiv.textContent = newQuote;
+        }
 
-      // 50% chance to move inside the Yes button
-      if (Math.random() < 0.5) {
-        // Move randomly on the screen as before
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-        noBtn.style.position = "absolute";
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-      } else {
-        // Move inside the Yes button
-        const yesRect = yesBtn.getBoundingClientRect();
-        const offsetX = Math.random() * (yesRect.width - noBtn.offsetWidth);
-        const offsetY = Math.random() * (yesRect.height - noBtn.offsetHeight);
-        noBtn.style.position = "absolute";
-        noBtn.style.left = (yesRect.left + offsetX) + "px";
-        noBtn.style.top = (yesRect.top + offsetY) + "px";
-      }
-    });
+        // Move by exactly 100mm in a random direction, clamped to visible area
+        const mmToPx = 96 / 25.4; // 1mm = 96/25.4 px
+        const moveDist = 100 * mmToPx;
+        // Get current position relative to viewport
+        const rect = noBtn.getBoundingClientRect();
+        let curLeft = rect.left;
+        let curTop = rect.top;
+        // Pick a random angle
+        const angle = Math.random() * 2 * Math.PI;
+        let newLeft = curLeft + moveDist * Math.cos(angle);
+        let newTop = curTop + moveDist * Math.sin(angle);
+        // Clamp to viewport
+        const minLeft = 0;
+        const minTop = 0;
+        const maxLeft = window.innerWidth - noBtn.offsetWidth;
+        const maxTop = window.innerHeight - noBtn.offsetHeight;
+        newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+        newTop = Math.max(minTop, Math.min(newTop, maxTop));
+        // Set absolute position
+        noBtn.style.position = "fixed";
+        noBtn.style.left = newLeft + "px";
+        noBtn.style.top = newTop + "px";
+        noBtn.style.transform = "none";
+    }
 
     yesBtn.addEventListener("click", () => {
-      content.innerHTML = `
-        <div class="celebrate">
-          Yayyyy!! 💖🥰<br>
-          Happy Valentine’s Day! 🌹
-        </div>
-      `;
-      startConfetti();
+        card.innerHTML = "";
+        celebrate.style.display = "block";
+        card.appendChild(celebrate);
+        launchHearts();
     });
 
-    function startConfetti() {
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.background = 
-          ["#ff4d6d", "#ffafcc", "#ffc8dd", "#bde0fe"][Math.floor(Math.random()*4)];
-        confetti.style.animationDuration = (Math.random() * 2 + 2) + "s";
-        document.body.appendChild(confetti);
+    function launchHearts() {
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            heartsContainer.appendChild(heart);
 
-        setTimeout(() => confetti.remove(), 3000);
-      }
+            setTimeout(() => heart.remove(), 5000);
+        }
     }
-  </script>
+</script>
 
 </body>
 </html>
